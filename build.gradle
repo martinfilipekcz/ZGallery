@@ -39,7 +39,7 @@ ext {
 
     buildToolsVersion = "25.0.0"
     supportLibVersion = "25.0.1"
-    glideVersion = "3.7.0"
+    glideVersion = "4.12.0"
     photoViewLibVersion = "2.3.0"
     adsVersion = "10.0.1"
 }
