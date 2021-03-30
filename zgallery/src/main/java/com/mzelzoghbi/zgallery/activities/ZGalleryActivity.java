@@ -1,9 +1,11 @@
 package com.mzelzoghbi.zgallery.activities;
 
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.graphics.Color;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
@@ -13,7 +15,6 @@ import com.mzelzoghbi.zgallery.OnImgClick;
 import com.mzelzoghbi.zgallery.R;
 import com.mzelzoghbi.zgallery.adapters.HorizontalListAdapters;
 import com.mzelzoghbi.zgallery.adapters.ViewPagerAdapter;
-import com.mzelzoghbi.zgallery.entities.ZColor;
 
 /**
  * Created by mohamedzakaria on 8/11/16.
@@ -27,7 +28,7 @@ public class ZGalleryActivity extends BaseActivity {
     LinearLayoutManager mLayoutManager;
     HorizontalListAdapters hAdapter;
     private int currentPos;
-    private ZColor bgColor;
+    private int bgColor;
 
 
     @Override
@@ -44,11 +45,9 @@ public class ZGalleryActivity extends BaseActivity {
 
         // get intent data
         currentPos = getIntent().getIntExtra(Constants.IntentPassingParams.SELECTED_IMG_POS, 0);
-        bgColor = (ZColor) getIntent().getSerializableExtra(Constants.IntentPassingParams.BG_COLOR);
+        bgColor = getIntent().getIntExtra(Constants.IntentPassingParams.BG_COLOR, Color.BLACK);
 
-        if (bgColor == ZColor.WHITE) {
-            mainLayout.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
-        }
+        mainLayout.setBackgroundColor(bgColor);
 
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         // pager adapter

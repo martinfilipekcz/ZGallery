@@ -2,12 +2,13 @@ package com.mzelzoghbi.zgallery;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ImageView;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 /**
  * Created by mohamedzakaria on 8/7/16.
  */
-public class SquareImageView extends ImageView {
+public class SquareImageView extends AppCompatImageView {
     public SquareImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }

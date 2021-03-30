@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.mzelzoghbi.zgallery.activities.ZGalleryActivity;
-import com.mzelzoghbi.zgallery.entities.ZColor;
 
 import java.util.ArrayList;
 
@@ -17,10 +16,11 @@ public class ZGallery {
     private String title;
     private int spanCount = 2;
     private int toolbarColor = -1;
+    private int statusBarColor = -1;
     private int imgPlaceHolderResId = -1;
-    private ZColor color;
+    private int color;
     private int selectedImgPosition;
-    private ZColor backgroundColor;
+    private int backgroundColor;
 
     private ZGallery() {
     }
@@ -62,12 +62,23 @@ public class ZGallery {
     }
 
     /**
+     * Setting status bar Color ResourceId
+     *
+     * @param colorResId
+     * @return
+     */
+    public ZGallery setStatusBarColorResId(int colorResId) {
+        this.statusBarColor = colorResId;
+        return this;
+    }
+
+    /**
      * Setting z_toolbar color
      *
      * @param color enum color may be black or white
      * @return
      */
-    public ZGallery setToolbarTitleColor(ZColor color) {
+    public ZGallery setToolbarTitleColor(int color) {
         this.color = color;
         return this;
     }
@@ -83,7 +94,7 @@ public class ZGallery {
         return this;
     }
 
-    public ZGallery setGalleryBackgroundColor(ZColor backgroundColor) {
+    public ZGallery setGalleryBackgroundColor(int backgroundColor) {
         this.backgroundColor = backgroundColor;
         return this;
     }
@@ -97,6 +108,7 @@ public class ZGallery {
         gridActivity.putExtra(Constants.IntentPassingParams.TITLE, title);
         gridActivity.putExtra(Constants.IntentPassingParams.TOOLBAR_COLOR_ID, toolbarColor);
         gridActivity.putExtra(Constants.IntentPassingParams.TOOLBAR_TITLE_COLOR, color);
+        gridActivity.putExtra(Constants.IntentPassingParams.STATUS_BAR_COLOR_ID, statusBarColor);
         gridActivity.putExtra(Constants.IntentPassingParams.SELECTED_IMG_POS, selectedImgPosition);
         gridActivity.putExtra(Constants.IntentPassingParams.BG_COLOR, backgroundColor);
         mActivity.startActivity(gridActivity);

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.mzelzoghbi.zgallery.activities.ZGridActivity;
-import com.mzelzoghbi.zgallery.entities.ZColor;
 
 import java.util.ArrayList;
 
@@ -17,8 +16,9 @@ public class ZGrid {
     private String title;
     private int spanCount = 2;
     private int toolbarColor = -1;
+    private int statusBarColor = -1;
     private int imgPlaceHolderResId = -1;
-    private ZColor color;
+    private int color;
 
     private ZGrid() {
     }
@@ -71,7 +71,19 @@ public class ZGrid {
     }
 
     /**
+     * Setting status bar Color ResourceId
+     *
+     * @param colorResId
+     * @return
+     */
+    public ZGrid setStatusBarColorResId(int colorResId) {
+        this.statusBarColor = colorResId;
+        return this;
+    }
+
+    /**
      * Set placeholder image for images in the grid
+     *
      * @param imgPlaceHolderResId
      * @return
      */
@@ -86,10 +98,11 @@ public class ZGrid {
      * @param color enum color may be black or white
      * @return
      */
-    public ZGrid setToolbarTitleColor(ZColor color) {
+    public ZGrid setToolbarTitleColor(int color) {
         this.color = color;
         return this;
     }
+
     /**
      * Start the grid activity with builder settings
      */
@@ -99,6 +112,7 @@ public class ZGrid {
         gridActivity.putExtra(Constants.IntentPassingParams.COUNT, spanCount);
         gridActivity.putExtra(Constants.IntentPassingParams.TITLE, title);
         gridActivity.putExtra(Constants.IntentPassingParams.TOOLBAR_COLOR_ID, toolbarColor);
+        gridActivity.putExtra(Constants.IntentPassingParams.STATUS_BAR_COLOR_ID, statusBarColor);
         gridActivity.putExtra(Constants.IntentPassingParams.IMG_PLACEHOLDER, imgPlaceHolderResId);
         gridActivity.putExtra(Constants.IntentPassingParams.TOOLBAR_TITLE_COLOR, color);
         mActivity.startActivity(gridActivity);

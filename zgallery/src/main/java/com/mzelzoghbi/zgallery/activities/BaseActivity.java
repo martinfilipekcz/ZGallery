@@ -1,15 +1,19 @@
 package com.mzelzoghbi.zgallery.activities;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.mzelzoghbi.zgallery.Constants;
 import com.mzelzoghbi.zgallery.R;
-import com.mzelzoghbi.zgallery.entities.ZColor;
 
 import java.util.ArrayList;
 
@@ -19,8 +23,9 @@ import java.util.ArrayList;
 public abstract class BaseActivity extends AppCompatActivity {
     protected Toolbar mToolbar;
     protected ArrayList<String> imageURLs;
-    protected ZColor toolbarTitleColor;
+    protected int toolbarTitleColor;
     protected int toolbarColorResId;
+    protected int statusBarColorResId;
     private String title;
 
     @Override
@@ -33,30 +38,44 @@ public abstract class BaseActivity extends AppCompatActivity {
         // get values
         imageURLs = getIntent().getStringArrayListExtra(Constants.IntentPassingParams.IMAGES);
         toolbarColorResId = getIntent().getIntExtra(Constants.IntentPassingParams.TOOLBAR_COLOR_ID, -1);
+        statusBarColorResId = getIntent().getIntExtra(Constants.IntentPassingParams.STATUS_BAR_COLOR_ID, -1);
         title = getIntent().getStringExtra(Constants.IntentPassingParams.TITLE);
-        toolbarTitleColor = (ZColor) getIntent().getSerializableExtra(Constants.IntentPassingParams.TOOLBAR_TITLE_COLOR);
+        toolbarTitleColor = getIntent().getIntExtra(Constants.IntentPassingParams.TOOLBAR_TITLE_COLOR, Color.BLACK);
 
         if (getSupportActionBar() == null) {
             setSupportActionBar(mToolbar);
             mToolbar.setVisibility(View.VISIBLE);
-            if (toolbarTitleColor == ZColor.BLACK) {
-                mToolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.black));
-                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black);
+            mToolbar.setTitleTextColor(toolbarTitleColor);
+
+            if (toolbarTitleColor == Color.BLACK) {
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.zg_ic_arrow_back_black);
             } else {
-                mToolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
-                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.zg_ic_arrow_back_white);
             }
-            mToolbar.setBackgroundColor(getResources().getColor(toolbarColorResId));
+
+            if (toolbarColorResId != -1) {
+                mToolbar.setBackgroundColor(getResources().getColor(toolbarColorResId));
+            }
+
+            if (statusBarColorResId != -1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+
+                if (window != null) {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    window.setStatusBarColor(ContextCompat.getColor(this, statusBarColorResId));
+                }
+            }
+
             if (title != null) {
                 getSupportActionBar().setTitle(title);
             }
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
         } else {
             mToolbar.setVisibility(View.GONE);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
         }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         afterInflation();
     }

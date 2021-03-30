@@ -9,6 +9,7 @@ public final class Constants {
         public static final String IMAGES = "images";
         public static final String COUNT = "count";
         public static final String TOOLBAR_COLOR_ID = "toolbarColorId";
+        public static final String STATUS_BAR_COLOR_ID = "statusBarColorId";
         public static final String TITLE = "title";
         public static final String IMG_PLACEHOLDER = "placeholder";
         public static final String TOOLBAR_TITLE_COLOR = "toolbarTitleColor";
