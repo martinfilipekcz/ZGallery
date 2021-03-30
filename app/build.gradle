@@ -25,7 +25,5 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation project(':zgallery')
 
-    implementation "com.google.firebase:firebase-ads:$rootProject.ext.adsVersion"
-
 }
 
